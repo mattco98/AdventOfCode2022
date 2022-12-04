@@ -1,11 +1,21 @@
 #![feature(iter_array_chunks)]
 
 mod utils;
-mod day3;
+mod day4;
 
-use day3::{part1, part2};
+use std::time::Instant;
+use day4::{part1, part2};
 
 pub fn main() {
-    println!("Part 1: {}", part1());
-    println!("Part 2: {}", part2());
+    {
+        let start = Instant::now();
+        let p1 = part1();
+        println!("Part 1: {} ({:.1?})", p1, start.elapsed());
+    }
+
+    {
+        let start = Instant::now();
+        let p2 = part2();
+        println!("Part 2: {} ({:.1?})", p2, start.elapsed());
+    }
 }
