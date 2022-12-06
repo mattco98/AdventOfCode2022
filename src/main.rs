@@ -1,10 +1,10 @@
 #![feature(iter_array_chunks)]
 
 mod utils;
-mod day5;
+mod day6;
 
 use std::time::Instant;
-use day5::{part1, part2};
+use day6::{part1, part2};
 
 pub fn main() {
     {
