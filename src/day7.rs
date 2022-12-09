@@ -1,6 +1,5 @@
 use std::{cell::RefCell, fmt, rc::Rc};
-use crate::lexer::Lexer;
-use crate::utils::get_input;
+use crate::utils::{Lexer, get_input};
 
 pub fn part1() -> usize {
     let fs = get_file_system();

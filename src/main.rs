@@ -1,7 +1,6 @@
 #![feature(iter_array_chunks)]
 
 mod day7;
-mod lexer;
 mod utils;
 
 use std::time::Instant;
