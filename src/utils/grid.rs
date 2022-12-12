@@ -1,4 +1,6 @@
 use std::fmt;
+use std::hash::{Hash, Hasher};
+use crate::utils::{Point, Direction};
 
 /// Represents a 2D grid of elements of type T
 /// 
@@ -32,10 +34,27 @@ pub struct Grid<T> {
 /// Stores the x and y coordinate of a particular point on the Grid. Can access
 /// the underlying data via a Deref implementation. Has various methods for 
 /// traversal. 
+#[derive(Clone, Copy)]
 pub struct GridNode<'a, T> {
     x: usize,
     y: usize,
     grid: &'a Grid<T>,
+}
+
+impl<'a, T> PartialEq for GridNode<'a, T> {
+    fn eq(&self, other: &Self) -> bool {
+        self.x == other.x && self.y == other.y && (self.grid as *const Grid<T>) == (other.grid as *const Grid<T>)
+    }
+}
+
+impl<'a, T> Eq for GridNode<'a, T> {}
+
+impl<'a, T> Hash for GridNode<'a, T> {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.x.hash(state);
+        self.y.hash(state);
+        (self.grid as *const Grid<T>).hash(state);
+    }
 }
 
 #[allow(dead_code)]
@@ -50,6 +69,10 @@ impl<T> Grid<T> {
         } else {
             Some(GridNode { x, y, grid: &self })
         }
+    }
+
+    pub fn at_point(&self, point: Point) -> Option<GridNode<T>> {
+        self.at(point.x as usize, point.y as usize)
     }
 
     pub fn x_len(&self) -> usize {
@@ -90,11 +113,34 @@ impl<T> Grid<T> {
 
 #[allow(dead_code)]
 impl<'a, T> GridNode<'a, T> {
+    pub fn x(&self) -> usize {
+        self.x
+    }
+
+    pub fn y(&self) -> usize {
+        self.y
+    }
+
     pub fn moved(&self, dx: isize, dy: isize) -> Option<GridNode<'a, T>> {
         let new_x = self.x as isize + dx;
         let new_y = self.y as isize + dy;
 
-        if new_x < 0 || new_x > self.grid.x_len() as isize || new_y < 0 || new_y > self.grid.y_len() as isize {
+        if new_x < 0 || new_x >= self.grid.x_len() as isize || new_y < 0 || new_y >= self.grid.y_len() as isize {
+            None
+        } else {
+            Some(GridNode {
+                x: new_x as usize,
+                y: new_y as usize,
+                grid: self.grid
+            })
+        }
+    }
+
+    pub fn move_in_direction(&self, direction: Direction, n: isize) -> Option<GridNode<'a, T>> {
+        let new_x = self.x as isize + n * direction.dx();
+        let new_y = self.y as isize + n * direction.dy();
+
+        if new_x < 0 || new_x >= self.grid.x_len() as isize || new_y < 0 || new_y >= self.grid.y_len() as isize {
             None
         } else {
             Some(GridNode {
