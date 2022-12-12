@@ -1,5 +1,3 @@
-use std::ops::Rem;
-use std::str::FromStr;
 use crate::utils::get_input;
 
 // 0 == Rock, 1 == Paper, 2 == Scissors

@@ -57,7 +57,6 @@ impl<'a, T> Hash for GridNode<'a, T> {
     }
 }
 
-#[allow(dead_code)]
 impl<T> Grid<T> {
     pub fn new(items: Vec<Vec<T>>) -> Self {
         Grid { items }
@@ -111,7 +110,6 @@ impl<T> Grid<T> {
     }
 }
 
-#[allow(dead_code)]
 impl<'a, T> GridNode<'a, T> {
     pub fn x(&self) -> usize {
         self.x

@@ -6,7 +6,6 @@ pub struct Lexer {
     source: Vec<char>,
 }
 
-#[allow(dead_code)]
 impl Lexer {
     pub fn new<T: AsRef<str>>(source: T) -> Self {
         Self { cursor: 0, source: source.as_ref().chars().collect() }

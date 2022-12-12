@@ -6,7 +6,6 @@ pub enum Direction {
     Down,
 }
 
-#[allow(dead_code)]
 impl Direction {
     pub fn flipped(&self) -> Direction {
         match self {

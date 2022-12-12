@@ -11,7 +11,6 @@ pub struct Point {
     pub y: isize,
 }
 
-#[allow(dead_code)]
 impl Point {
     pub fn new(x: isize, y: isize) -> Self {
         Self { x, y }
