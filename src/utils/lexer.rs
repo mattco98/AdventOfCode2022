@@ -1,3 +1,4 @@
+use std::ops::Neg;
 use std::str::FromStr;
 
 pub struct Lexer {
@@ -24,7 +25,7 @@ impl Lexer {
     }
 
     pub fn has(&self, n: usize) -> bool {
-        self.cursor + n < self.source.len()
+        self.cursor + n - 1 < self.source.len()
     }
 
     pub fn consume_word(&mut self) -> Option<String> {
@@ -41,7 +42,14 @@ impl Lexer {
         }
     }
 
-    pub fn consume_number<T: FromStr>(&mut self, base: u32) -> Option<T> {
+    pub fn consume_integer<T: FromStr + Neg<Output=T>>(&mut self, base: u32) -> Option<T> {
+        let is_negative = self.consume_char('-');
+        self.consume_unsigned_integer::<T>(base).map(|t| {
+            if is_negative { -t } else { t }
+        })
+    }
+
+    pub fn consume_unsigned_integer<T: FromStr>(&mut self, base: u32) -> Option<T> {
         let start = self.cursor;
 
         while !self.done() && self.ch().is_digit(base) {

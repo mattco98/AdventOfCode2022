@@ -153,7 +153,7 @@ fn get_file_system() -> FileSystem {
                         parent: Some(file_system.active_directory()),
                     }));
                 } else {
-                    let size = lexer.consume_number::<usize>(10).unwrap();
+                    let size = lexer.consume_unsigned_integer::<usize>(10).unwrap();
                     lexer.skip_whitespace();
                     
                     file_system.insert(Node::File(File {
