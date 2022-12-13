@@ -1,4 +1,4 @@
-#![feature(iter_array_chunks)]
+#![feature(iter_array_chunks, let_chains)]
 #![allow(dead_code)]
 
 mod day1;
@@ -13,6 +13,7 @@ mod day9;
 mod day10;
 mod day11;
 mod day12;
+mod day13;
 mod utils;
 
 use std::fmt::Display;
@@ -31,6 +32,7 @@ pub fn main() {
     run_day(10, day10::part1, day10::part2);
     run_day(11, day11::part1, day11::part2);
     run_day(12, day12::part1, day12::part2);
+    run_day(13, day13::part1, day13::part2);
 }
 
 fn run_day<T1: Display, T2: Display, F1: Fn() -> T1, F2: Fn() -> T2>(day: usize, part1: F1, part2: F2) {

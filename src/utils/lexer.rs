@@ -90,6 +90,10 @@ impl Lexer {
         ch
     }
 
+    pub fn matches(&self, ch: char) -> bool {
+        !self.done() && self.ch() == ch
+    }
+
     pub fn matches_str<T: AsRef<str>>(&self, s: T) -> bool {
         let r = s.as_ref();
 
