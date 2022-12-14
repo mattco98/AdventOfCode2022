@@ -74,6 +74,15 @@ impl<T> Grid<T> {
         self.at(point.x as usize, point.y as usize)
     }
 
+    pub fn set_at(&mut self, point: GridNode<T>, value: T) {
+        assert_eq!(self as *const _, point.grid as *const _);
+        self.items[point.y as usize][point.x as usize] = value;
+    }
+
+    pub fn set_at_point(&mut self, point: Point, value: T) {
+        self.items[point.y as usize][point.x as usize] = value;
+    }
+
     pub fn x_len(&self) -> usize {
         if self.y_len() > 0 {
             self.items[0].len()
